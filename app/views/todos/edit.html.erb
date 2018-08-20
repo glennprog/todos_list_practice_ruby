@@ -1,0 +1,9 @@
+<% content_for(:app_title, @app_title) %>
+<% content_for(:current_app_title, @current_app_title) %>
+
+<% content_for :content do %>
+    <h1>Editing Todo</h1>
+    <%= render 'form', todo: @todo %>
+    <%= link_to 'Show', @todo %> |
+    <%= link_to 'Back', todos_path %>
+<% end %>

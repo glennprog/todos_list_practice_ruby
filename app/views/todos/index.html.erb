@@ -1,0 +1,163 @@
+<% content_for(:app_title, @app_title) %>
+<% content_for(:current_app_title, @current_app_title) %>
+
+<% content_for :content do %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Todos</h1>
+
+<%= link_to 'New Todo', new_todo_path %>
+<br><br>
+
+<ul class="pagination pagination-sm">
+  <li class="page-item">
+    <% if @prev_page_flag == true %>
+      <%= link_to "Previous", "/todos?page="+(@page - 1).to_s, class: "page-link" %>
+    <% else %>
+      <%= link_to "Previous", "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+    <% end %>
+  </li>
+    <% if @page <= 5 %>
+      <% @nb_page_display.times do |page| %>
+        <% if @page == (page+1) && (page+1) <= @nb_page_To_display %>
+          <li class="page-item active">
+             <%= link_to ''+(page + 1).to_s, "/todos?page="+(page + 1).to_s, class: "page-link" %>
+          </li>
+        <% else %>
+          <% if (page+1) <= @nb_page_To_display %>
+            <li class="page-item">
+              <%= link_to ''+(page + 1).to_s, "/todos?page="+(page + 1).to_s, class: "page-link" %>
+            </li>
+          <% else %>
+            <li class="page-item">
+              <%= link_to ''+(page + 1).to_s, "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+            </li>
+          <% end %>
+        <% end %>
+      <%end%>
+    <% else %>
+      <% for page in @nb_page_display.downto(1) do %>
+        <% if @page == (@page - page + 1) && (@page - page + 1) <= @nb_page_To_display %>
+          <li class="page-item active">
+            <%= link_to ''+(@page - page + 1).to_s, "/todos?page="+(@page - page + 1).to_s, class: "page-link" %>
+          </a></li>
+        <% else %>
+          <% if (@page - page + 1) <= @nb_page_To_display %>
+            <li class="page-item">
+              <%= link_to ''+(@page - page + 1).to_s, "/todos?page="+(@page - page + 1).to_s, class: "page-link" %>
+            </li>
+          <% else %>
+            <li class="page-item">
+              <%= link_to ''+(@page - page + 1).to_s, "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+            </li>
+          <% end %>
+        <% end %>
+      <%end%>
+    <% end %>
+    <% if @next_page_flag == true %>
+      <%= link_to "Next", "/todos?page="+(@page + 1).to_s, class: "page-link" %>
+    <% else %>
+      <%= link_to "Next", "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+    <% end %>
+  </li>
+</ul>
+
+<table class="table table-striped table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Notes</th>
+      <th scope="col">Deadline</th>
+      <th scope="col">Time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @todos.each do |todo| %>
+      <tr>
+        <td class="border border-secondary"><%= todo.id %></td>
+        <td class="border border-secondary"><%= todo.title %></td>
+        <td class="border border-secondary"><%= todo.notes %></td>
+        <td class="border border-secondary"><%= todo.deadline %></td>
+        <td class="border border-secondary"><%= todo.time %></td>
+        <td class="border border-secondary"><%= link_to 'Show', todo %></td>
+        <td class="border border-secondary"><%= link_to 'Edit', edit_todo_path(todo) %></td>
+        <td class="border border-secondary"><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<ul class="pagination pagination-sm">
+  <li class="page-item">
+    <% if @prev_page_flag == true %>
+      <%= link_to "Previous", "/todos?page="+(@page - 1).to_s, class: "page-link" %>
+    <% else %>
+      <%= link_to "Previous", "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+    <% end %>
+  </li>
+    <% if @page <= 5 %>
+      <% @nb_page_display.times do |page| %>
+        <% if @page == (page+1) && (page+1) <= @nb_page_To_display %>
+          <li class="page-item active">
+             <%= link_to ''+(page + 1).to_s, "/todos?page="+(page + 1).to_s, class: "page-link" %>
+          </li>
+        <% else %>
+          <% if (page+1) <= @nb_page_To_display %>
+            <li class="page-item">
+              <%= link_to ''+(page + 1).to_s, "/todos?page="+(page + 1).to_s, class: "page-link" %>
+            </li>
+          <% else %>
+            <li class="page-item">
+              <%= link_to ''+(page + 1).to_s, "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+            </li>
+          <% end %>
+        <% end %>
+      <%end%>
+    <% else %>
+      <% @nb_page_display.times do |page| %>
+        <% if @page == (@page + page) && (@page + page) <= @nb_page_To_display %>
+          <li class="page-item active">
+            <%= link_to ''+(@page + page).to_s, "/todos?page="+(@page + page).to_s, class: "page-link" %>
+          </a></li>
+        <% else %>
+          <% if (@page + page) <= @nb_page_To_display %>
+            <li class="page-item">
+              <%= link_to ''+(@page + page).to_s, "/todos?page="+(@page + page).to_s, class: "page-link" %>
+            </li>
+          <% else %>
+            <li class="page-item">
+              <%= link_to ''+(@page + page).to_s, "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+            </li>
+          <% end %>
+        <% end %>
+      <%end%>
+    <% end %>
+    <% if @next_page_flag == true %>
+      <%= link_to "Next", "/todos?page="+(@page + 1).to_s, class: "page-link" %>
+    <% else %>
+      <%= link_to "Next", "#", class: "page-link", style: "pointer-events:none;background-color:#959595;color:gray;" %>
+    <% end %>
+  </li>
+</ul>
+
+<!--surround the select box with a "custom-select" DIV element. Remember to set the width:-->
+<div style="width:150px;">
+  <select class="custom-select">
+    <option value="10">amount 3</option> <!-- for ux design purpose -->
+    <option value="10">amount 10</option>
+    <option value="25">amount 25</option>
+    <option value="50">amount 50</option>
+    <option value="100">amount 100</option>
+    <option value="250">amount 250</option>
+    <option value="500">amount 500</option>
+  </select>
+</div>
+
+<br>
+<%= link_to 'New Todo', new_todo_path %>
+
+<% end %>
